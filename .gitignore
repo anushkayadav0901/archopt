@@ -1,0 +1,13 @@
+node_modules/
+.next/
+frontend/.next/
+frontend/node_modules/
+backend/.venv/
+backend/__pycache__/
+backend/archopt.db
+backend/engine/archopt_engine.exe
+backend/engine/build/
+*.pyc
+*.tsbuildinfo
+.env
+work/

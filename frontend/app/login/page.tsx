@@ -1,0 +1,10 @@
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Layers3, LockKeyhole } from 'lucide-react';
+import { api } from '../../components/api';
+export default function LoginPage(){
+ const router=useRouter(); const [username,setUsername]=useState('demo'); const [password,setPassword]=useState('12345678'); const [error,setError]=useState(''); const [loading,setLoading]=useState(false);
+ async function submit(e:React.FormEvent){e.preventDefault();setError('');if(!username||!password){setError('Enter both username and password.');return}setLoading(true);try{const data=await api('/auth/login',{method:'POST',body:JSON.stringify({username,password})});localStorage.setItem('archopt-auth',data.token);router.push('/dashboard')}catch(e){setError(e instanceof Error?e.message:'Unable to sign in')}finally{setLoading(false)}}
+ return <main className="grid min-h-screen place-items-center bg-wash p-6"><form onSubmit={submit} className="card w-full max-w-md p-8"><div className="mb-8 flex items-center gap-3"><div className="grid h-11 w-11 place-items-center rounded-md bg-navy text-white"><Layers3/></div><div><h1 className="text-xl font-bold text-navy">ArchOpt</h1><p className="text-sm text-muted">Intelligent space optimizer</p></div></div><h2 className="text-2xl font-bold">Sign in to your workspace</h2><p className="mt-2 text-sm text-muted">Academic demo access for architectural planning.</p>{error&&<p role="alert" className="mt-5 rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</p>}<label className="label mt-6 block">Username<input className="field" value={username} onChange={e=>setUsername(e.target.value)} autoComplete="username"/></label><label className="label mt-4 block">Password<input className="field" type="password" value={password} onChange={e=>setPassword(e.target.value)} autoComplete="current-password"/></label><button disabled={loading} className="btn mt-7 w-full"> <LockKeyhole size={16}/>{loading?'Signing in…':'Sign in'}</button><p className="mt-5 text-center text-xs text-muted">Demo: <b>demo</b> / <b>12345678</b></p></form></main>
+}

@@ -1,0 +1,2 @@
+'use client';import { useRouter } from 'next/navigation';import ProjectForm from '../../../../components/ProjectForm';import { api } from '../../../../components/api';
+export default function NewProject(){const router=useRouter();return <><div className="mb-6"><h1 className="text-2xl font-bold">Create project</h1><p className="mt-1 text-muted">Define the plot and spaces before optimizing.</p></div><ProjectForm onSubmit={async p=>{const created=await api('/projects',{method:'POST',body:JSON.stringify(p)});router.push(`/projects/${created.id}/editor`)}}/></>}

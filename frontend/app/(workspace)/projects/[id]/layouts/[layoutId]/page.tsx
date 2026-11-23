@@ -1,0 +1,1 @@
+import ProjectWorkspace from '../../../../../../components/ProjectWorkspace';export default async function Page({params}:{params:Promise<{id:string;layoutId:string}>}){const {id,layoutId}=await params;return <ProjectWorkspace projectId={Number(id)} layoutId={Number(layoutId)} mode="analysis"/>}
